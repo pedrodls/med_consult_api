@@ -1,0 +1,47 @@
+Requisitos
+
+- Marcação
+  - Utente
+  - Administrativo
+  - Consulta*
+  	- Utente
+  	- Acto Clinico 
+  		- Tipo (Consulta)
+  		- Subsistema de Saúde
+  		- Profissional
+  - Exame*
+  	- Utente
+  	- Acto Clinico
+  		- Tipo (Exame)
+		- Subsistema de saúde
+		- Profissional
+  - Estado
+  	[Pendente', 'Agendado', Realizado']
+  	
+- Usuários
+  - Utente 
+  	- Registrado
+  	- Não Registado
+  - Administrativo
+  - Administrador do sistema
+
+Funcionalidades
+
+  - Fazer marcação
+  - Confirmar a marcação
+  - Criação de conta automática | de forma manual?
+  - Alteração de dados da conta
+  - Consulta de histórico
+  - Exportação de detalhes de uma marcação por PDF
+  - Consultar os pedidos de todos os utentes
+  - Estado da marcação
+  
+Recursos
+
+  - Envio de email de criação de conta
+  - Envio de email de confirmação e detalhes de uma marcação
+  
+  
+  
+
+
