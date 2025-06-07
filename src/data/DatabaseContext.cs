@@ -1,14 +1,15 @@
 
+using med_consult_api.src.models;
+namespace med_consult_api.src.data;
 using Microsoft.EntityFrameworkCore;
 
-namespace med_consult_api.src.data;
 
 public class DatabaseContext : DbContext
 {
-    public DatabaseContext(DbContextOptions<DbContext> options) : base(options)
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
 
     }
 
-    //public DbSet<User> Users { get; set; } 
+    public DbSet<User> Users { get; set; } 
 }
