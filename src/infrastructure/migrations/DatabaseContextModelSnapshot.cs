@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using med_consult_api.src.data;
+using med_consult_api.src.infrastructure;
 
 #nullable disable
 
-namespace med_consult_api.src.data.migrations
+namespace med_consult_api.src.infrastructure.migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20250607002411_Inicial")]
-    partial class Inicial
+    partial class DatabaseContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,7 +22,7 @@ namespace med_consult_api.src.data.migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("med_consult_api.src.models.User", b =>
+            modelBuilder.Entity("med_consult_api.src.domain.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

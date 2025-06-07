@@ -1,7 +1,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace med_consult_api.src.models;
+namespace med_consult_api.src.domain;
 
 public class User
 {
@@ -9,6 +9,6 @@ public class User
     public Guid Id { get; set; } = Guid.NewGuid();
 
     [Required]
-    public string Email { get; set; }
+    public required string Email { get; set; }
 
 }

@@ -1,8 +1,8 @@
 
-using med_consult_api.src.models;
-namespace med_consult_api.src.data;
+using med_consult_api.src.domain;
 using Microsoft.EntityFrameworkCore;
 
+namespace med_consult_api.src.infrastructure;
 
 public class DatabaseContext : DbContext
 {
