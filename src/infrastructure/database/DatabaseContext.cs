@@ -1,4 +1,3 @@
-
 using med_consult_api.src.domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,8 +7,16 @@ public class DatabaseContext : DbContext
 {
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
-
     }
 
-    public DbSet<User> Users { get; set; } 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Role>()
+            .HasIndex(r => r.Name)
+            .IsUnique();
+    }
+
+    public DbSet<Role> Roles { get; set; }
 }
