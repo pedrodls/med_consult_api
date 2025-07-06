@@ -9,11 +9,28 @@ namespace med_consult_api.src.presentation;
 // [Authorize
 public class RoleController : ControllerBase
 {
-    private IService<Role, CreateRoleDTO, RoleDTO> roleService;
+    private IService<Role, CreateRoleDTO, RoleDTO, UpdateRoleDTO> roleService;
 
-    public RoleController(IService<Role, CreateRoleDTO, RoleDTO> roleService)
+    public RoleController(IService<Role, CreateRoleDTO, RoleDTO, UpdateRoleDTO> roleService)
     {
         this.roleService = roleService;
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<RoleDTO>> CreateRole([FromBody] CreateRoleDTO roleDto)
+    {
+        try
+        {
+            return await roleService.Create(new RoleFactory(), roleDto);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(400, new
+            {
+                message = "Ocorreu um erro interno ao processar a solicitação, verifique se este role não existe e tente novamente!",
+                error = ex.Message
+            });
+        }
     }
 
     [HttpGet]
@@ -21,7 +38,9 @@ public class RoleController : ControllerBase
     [FromQuery] RoleQuery? query = null)
     {
 
-        var roles = await roleService.FindAll(
+        try
+        {
+            var roles = await roleService.FindAll(
             query?.Name,
             new PageParams
             {
@@ -31,74 +50,69 @@ public class RoleController : ControllerBase
             }
         );
 
-        /* [
-            new RoleMapper().MapToDTO(new Role("Admin", "Administrator role")),
-        new RoleMapper().MapToDTO(new Role("User", "Regular user role"))
-        ];
- */
-        return Ok(roles);
-    }
-
-    /* [HttpGet]
-    public async Task<IActionResult> GetAllRoles()
-    {
-        var roles = await roleService.GetAllRolesAsync();
-        return Ok(roles);
+            return Ok(roles);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new
+            {
+                message = "Ocorreu um erro interno ao processar a solicitação.",
+                error = ex.Message
+            });
+        }
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetRoleById(Guid id)
+    public async Task<ActionResult<RoleDTO>> GetRoleById(Guid id)
     {
-        var role = await roleService.GetRoleByIdAsync(id);
-        if (role == null)
+        try
         {
-            return NotFound();
+            return await roleService.FindOne(id);
         }
-        return Ok(role);
-    } */
-
-    [HttpPost]
-    public async Task<IActionResult> CreateRole([FromBody] CreateRoleDTO roleDto)
-    {
-        Role createdRole = await roleService.Create(new RoleFactory(), roleDto);
-
-        System.Console.WriteLine($"Created Role: {createdRole}");
-        if (createdRole == null)
+        catch (Exception ex)
         {
-            return BadRequest("Role creation failed.");
+            return StatusCode(404, new
+            {
+                message = "Não foi possível encontrar o Role!",
+                error = ex.Message
+            });
         }
-
-        return BadRequest("Role creation failed.");
-
-        //return new RoleMapper().MapToDTO(createdRole);
     }
 
-    /*  [HttpPut("{id}")]
-     public async Task<IActionResult> UpdateRole(Guid id, [FromBody] RoleDto roleDto)
-     {
-         if (!ModelState.IsValid)
-         {
-             return BadRequest(ModelState);
-         }
 
-         var updatedRole = await roleService.UpdateRoleAsync(id, roleDto);
-         if (updatedRole == null)
-         {
-             return NotFound();
-         }
 
-         return Ok(updatedRole);
-     }
+    [HttpPut("{id}")]
+    public async Task<ActionResult<Response>> UpdateRole(Guid id, [FromBody] UpdateRoleDTO roleDto)
+    {
+       try
+        {
+            return await roleService.Update(new RoleFactory(), id, roleDto);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(400, new
+            {
+                message = "Não foi possível concluir a operação!",
+                error = ex.Message
+            });
+        }
 
-     [HttpDelete("{id}")]
-     public async Task<IActionResult> DeleteRole(Guid id)
-     {
-         var result = await roleService.DeleteRoleAsync(id);
-         if (!result)
-         {
-             return NotFound();
-         }
+    }
 
-         return NoContent();
-     } */
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<Response>> DeleteRole(Guid id)
+    {
+        try
+        {
+            return await roleService.Delete(id);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(400, new
+            {
+                message = "Não foi possível concluir a operação!",
+                error = ex.Message
+            });
+        }
+    }
 }

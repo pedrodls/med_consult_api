@@ -2,41 +2,47 @@ using med_consult_api.src.domain;
 
 namespace med_consult_api.src.application;
 
-public class Service<T, D, R> : IService<T, D, R>
+public class Service<T, C, R, U> : IService<T, C, R, U>
     where T : DomainModel
-    where R : Dto
+    where U : UpdateDTO
 {
     private readonly IRepository<T> repository;
-   /*  private readonly IMapper<T, R> mapper; */
+    private readonly IMapper<T, R> mapper;
 
-    public Service(IRepository<T> repository/* , IMapper<T, R> mapper */)
+    public Service(IRepository<T> repository, IMapper<T, R> mapper)
     {
         this.repository = repository;
-     /*    this.mapper = mapper; */
+        this.mapper = mapper;
     }
 
-    public Task<T> Create(IFactory<T, D> factory, D createDTO)
+    public Task<R> Create(IFactory<T, C, U> factory, C createDTO)
     {
-        return new CreateUseCase<T, D>(repository).ExecuteAsync(factory.Create(createDTO));
+        return new CreateUseCase<T, R>(repository, mapper).ExecuteAsync(factory.Create(createDTO));
     }
 
-    public Task<T> Delete(Guid id)
+    public async Task<Response> Update(IFactory<T, C, U> factory, Guid id, U updateDTO)
     {
-        throw new NotImplementedException();
+   
+            R entityDataFound = await FindOne(id);
+
+            return await new UpdateUseCase<T, R>(repository).ExecuteAsync(id, factory.Update(mapper.MapToEntity(entityDataFound), updateDTO));
+       
     }
 
-    public Task<PageResult<T>> FindAll(string? parameters, PageParams? paginateParams)
+    public Task<PageResult<R>> FindAll(string? parameters, PageParams? paginateParams)
     {
-        return new FindAllUseCase<T>(repository).ExecuteAsync(parameters, paginateParams);
+        return new FindAllUseCase<T, R>(repository, mapper).ExecuteAsync(parameters, paginateParams);
     }
 
-    public Task<T> FindOne(Guid id)
+    public async Task<Response> Delete(Guid id)
     {
-        throw new NotImplementedException();
+        return await new DeleteUseCase<T, R>(repository).ExecuteAsync(id);
     }
 
-    public Task<T> Update(R updateDTO)
+    public async Task<R> FindOne(Guid id)
     {
-        throw new NotImplementedException();
+        return await new FindOneUseCase<T, R>(repository, mapper).ExecuteAsync(id);
     }
+
+
 }

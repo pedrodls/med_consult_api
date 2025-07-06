@@ -11,6 +11,7 @@ public class DatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        //Definir aqui as regras, constrains, etc
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Role>()

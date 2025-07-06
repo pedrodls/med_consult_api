@@ -3,7 +3,8 @@ namespace med_consult_api.src.application;
 
 public interface IFindAllUseCase<T, D>
 {
-        public Task<PageResult<T>> ExecuteAsync(
+        public Task<PageResult<D>> ExecuteAsync(
             string? parameters,
-            PageParams? paginateParams = null);
+            PageParams? paginateParams = null
+        );
 }

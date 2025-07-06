@@ -3,8 +3,8 @@ namespace med_consult_api.src.domain;
 public class Role : DomainModel
 {
     
-    public string Name { get; private set; }
-    public string Description { get; private set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
 
     public Role(string name, string description)
         : base()

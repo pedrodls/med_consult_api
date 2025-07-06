@@ -1,68 +1,90 @@
 
 using med_consult_api.src.application;
 using med_consult_api.src.domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace med_consult_api.src.infrastructure;
 
 public class Repository<T> : IRepository<T> where T : DomainModel
 {
     private readonly DatabaseContext context;
+    private readonly DbSet<T> dbSet;
 
     public Repository(DatabaseContext context)
     {
         this.context = context;
+        dbSet = context.Set<T>();
     }
 
-    public Task<T> AddAsync(T entity)
+    public async Task<T> AddAsync(T entity)
     {
-        return Task.Run(() =>
+        return await Task.Run(() =>
         {
-            /*      context.Set<T>().Add(entity);
-                 context.SaveChanges(); */
+            dbSet.Add(entity);
+
+            context.SaveChanges();
+
             return entity;
         });
     }
 
-    public Task DeleteAsync(Guid id)
+    public async Task<Response> DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<PageResult<T>> FindAllAsync(string? parameters, PageParams? paginateParams = null)
-    {
-        return Task.Run(() =>
+        return await Task.Run(() =>
         {
-            // Simulate fetching data from the database
-            var data = context.Set<T>().AsQueryable();
+            T? entity = dbSet.Find(id);
 
-            // Apply pagination if provided
-            if (paginateParams != null)
-            {
-                data = data.Skip((paginateParams.Page - 1) * paginateParams.PageSize)
-                           .Take(paginateParams.PageSize);
-            }
+            if (entity == null)
+                return Response.Create(id, $"Entidade com ID = {id} não encontrada.");
 
-            // Create a PageResult object
-            var result = new PageResult<T>
-            {
-                Data = data.ToList(),
-                Total = context.Set<T>().Count(),
-                Page = paginateParams?.Page ?? 1,
-                PageSize = paginateParams?.PageSize ?? 10
-            };
+            entity.MarkAsDeleted();
 
-            return result;
+            context.SaveChanges();
+
+            return Response.Create(id, $"Entidade com ID '{id}' foi eliminada.");
+
         });
     }
 
-
-    public Task<T> FindOneAsync(Guid id)
+    public async Task<PageResult<T>> FindAllAsync(string? parameters, PageParams? paginateParams = null)
     {
-        throw new NotImplementedException();
+
+        var query = dbSet.AsQueryable();
+
+        if (paginateParams != null)
+        {
+            query = query
+                .OrderBy(x => paginateParams.order)
+                .Skip((paginateParams.Page - 1) * paginateParams.PageSize)
+                .Take(paginateParams.PageSize);
+        }
+
+        var data = await query.ToListAsync();
+        var total = await dbSet.CountAsync();
+
+        return new PageResult<T>
+        {
+            Data = data,
+            Total = total,
+            Page = paginateParams?.Page ?? 1,
+            PageSize = paginateParams?.PageSize ?? 10
+        };
     }
 
-    public Task<T> UpdateAsync(T entity)
+
+    public async Task<T> FindOneAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await dbSet.FindAsync(id) ?? throw new KeyNotFoundException($"Entidade com ID {id} não encontrada!");
+    }
+
+    public async Task<Response> UpdateAsync(Guid id, T entity)
+    {
+        var existingEntity = await FindOneAsync(id);
+
+        context.Entry(existingEntity).CurrentValues.SetValues(entity);
+
+        await context.SaveChangesAsync();
+
+        return Response.Create(id, $"Entidade com ID '{id}' foi atualizada.");
     }
 }

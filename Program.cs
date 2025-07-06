@@ -14,7 +14,14 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(b
 
 //Configurando a injeção de dependência
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped(typeof(IService<,,>), typeof(Service<,,>));
+builder.Services.AddScoped(typeof(IService<,,,>), typeof(Service<,,,>));
+
+// Registra todos os IMapper<> automaticamente
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<Program>() // ou outro assembly onde estão os mappers
+    .AddClasses(c => c.AssignableTo(typeof(IMapper<,>)))
+    .AsImplementedInterfaces()
+    .WithScopedLifetime());
 
 
 builder.Services.AddControllers();

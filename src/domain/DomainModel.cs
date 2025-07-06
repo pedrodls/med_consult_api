@@ -7,7 +7,7 @@ public abstract class DomainModel
     public DateTime UpdatedAt { get; private set; }
     public DateTime? DeletedAt { get; private set; }
     public bool IsDeleted { get; private set; }
-    public bool IsActive { get; private set; }
+    public bool IsActive { get; set; }
 
     public DomainModel()
     {
