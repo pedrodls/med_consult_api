@@ -1,6 +1,6 @@
 namespace med_consult_api.src;
 
-public enum GenderType
+public enum GenderEnumType
 {
     Masculino,
     Feminino
