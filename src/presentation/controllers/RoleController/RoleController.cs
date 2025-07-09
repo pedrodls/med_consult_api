@@ -37,18 +37,10 @@ public class RoleController : ControllerBase
     public async Task<ActionResult<PageResult<RoleDTO>>> GetAllRoles(
     [FromQuery] RoleQuery? query = null)
     {
-
         try
         {
             var roles = await roleService.FindAll(
-            query?.Name,
-            new PageParams
-            {
-                Page = query.Page,
-                PageSize = query.PageSize,
-                order = query.order
-            }
-        );
+            query?.Name, query);
 
             return Ok(roles);
         }
@@ -84,7 +76,7 @@ public class RoleController : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult<Response>> UpdateRole(Guid id, [FromBody] UpdateRoleDTO roleDto)
     {
-       try
+        try
         {
             return await roleService.Update(new RoleFactory(), id, roleDto);
         }

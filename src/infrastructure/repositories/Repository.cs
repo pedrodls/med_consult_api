@@ -48,29 +48,46 @@ public class Repository<T> : IRepository<T> where T : DomainModel
 
     public async Task<PageResult<T>> FindAllAsync(string? parameters, PageParams? paginateParams = null)
     {
-
         var query = dbSet.AsQueryable();
 
         if (paginateParams != null)
         {
-            query = query
-                .OrderBy(x => paginateParams.order)
-                .Skip((paginateParams.Page - 1) * paginateParams.PageSize)
-                .Take(paginateParams.PageSize);
+            query = query.Where(x => x.IsActive == paginateParams.IsActive);
+            query = query.Where(x => x.IsDeleted == paginateParams.IsDeleted);
+
+            if (paginateParams.CreatedAt != default)
+                query = query.Where(x => x.CreatedAt.Date == paginateParams.CreatedAt.Date);
+
+            if (paginateParams.UpdatedAt != default)
+                query = query.Where(x => x.UpdatedAt.Date == paginateParams.UpdatedAt.Date);
+
+            if (paginateParams.DeletedAt.HasValue)
+                query = query.Where(x => x.DeletedAt.HasValue && x.DeletedAt.Value.Date == paginateParams.DeletedAt.Value.Date);
         }
 
+        // Ordenação dinâmica
+        query = paginateParams?.Order?.ToUpper() == "DESC"
+            ? query.OrderByDescending(x => x.CreatedAt)
+            : query.OrderBy(x => x.CreatedAt); // ou outro campo configurável
+
+        // Paginação
+        int page = paginateParams?.Page ?? 1;
+        int pageSize = paginateParams?.PageSize ?? 10;
+
+        query = query.Skip((page - 1) * pageSize).Take(pageSize);
+
         var data = await query.ToListAsync();
-        var total = await dbSet.CountAsync();
 
         return new PageResult<T>
         {
             Data = data,
-            Total = total,
-            Page = paginateParams?.Page ?? 1,
-            PageSize = paginateParams?.PageSize ?? 10
+            Total = data.Count,
+            Page = page,
+            PageSize = pageSize
         };
     }
 
+    
 
     public async Task<T> FindOneAsync(Guid id)
     {
