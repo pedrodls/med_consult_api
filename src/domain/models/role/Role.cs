@@ -2,7 +2,6 @@ namespace med_consult_api.src.domain;
 
 public class Role : DomainModel
 {
-    
     public string Name { get; set; }
     public string Description { get; set; }
 

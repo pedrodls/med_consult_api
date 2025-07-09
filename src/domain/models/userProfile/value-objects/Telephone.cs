@@ -5,6 +5,8 @@ public class Telephone
 {
     public string Value { get; private set; }
 
+    private Telephone() { }
+
     public Telephone(string value)
     {
         if (!Regex.IsMatch(value, @"^\+?[1-9]\d{1,14}$"))

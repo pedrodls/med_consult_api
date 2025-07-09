@@ -5,6 +5,8 @@ public class FullName
     public string FirstName { get; }
     public string LastName { get; }
 
+    private FullName() { }
+
     public FullName(string firstName, string lastName)
     {
         if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))

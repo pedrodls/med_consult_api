@@ -13,6 +13,7 @@ public class UserProfile : DomainModel
     public AuthUser? AuthUser { get; private set; }
     public Guid? AuthUserId { get; private set; }
 
+    private UserProfile() { }
     public UserProfile(
         string avatar,
         FullName fullName,
@@ -22,7 +23,7 @@ public class UserProfile : DomainModel
         Email email,
         Address address,
         AuthUser? authUser,
-        Guid ?authUserId) : base()
+        Guid? authUserId) : base()
     {
         Avatar = avatar;
         FullName = fullName;

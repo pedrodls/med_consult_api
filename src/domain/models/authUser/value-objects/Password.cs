@@ -7,6 +7,8 @@ public class Password
 {
     public string Value { get; }
 
+    private Password() { }
+
     public Password(string value)
     {
         if (!Regex.IsMatch(value, Pattern.PASSWORD_PATTERN))
@@ -14,5 +16,7 @@ public class Password
 
         Value = value;
     }
+
+    public override string ToString() => Value;
 
 }

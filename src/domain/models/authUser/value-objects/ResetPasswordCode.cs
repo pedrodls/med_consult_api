@@ -6,9 +6,13 @@ public class ResetPasswordCode
 {
     public string Value { get; private set; }
 
+    private ResetPasswordCode() { }
+
     public ResetPasswordCode(string value)
     {
         Value = value;
     }
+
+    public override string ToString() => Value;
 
 }

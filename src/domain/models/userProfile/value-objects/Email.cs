@@ -7,7 +7,10 @@ namespace med_consult_api.src.domain;
 public class Email
 {
     public string  Value { get; private set; }
-    public Email (string value)
+
+    private Email() { }
+    
+    public Email(string value)
     {
         if (!Regex.IsMatch(value, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             throw new ArgumentException("Formato de email inválido.");

@@ -1,5 +1,7 @@
 
-namespace med_consult_api.src.domain;
+using med_consult_api.src.domain;
+
+namespace med_consult_api.src.application;
 
 public static class UserProfileFactory
 {

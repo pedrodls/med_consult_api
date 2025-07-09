@@ -7,15 +7,14 @@ public class AuthUser : DomainModel
     public Guid RoleId { get; private set; }
     public Role Role { get; private set; }
     public ResetPasswordCode ResetPasswordCode { get; private set; }
-    public VerificationCode VerificationCode { get; private set; }
 
+    private AuthUser() { }
     public AuthUser(
         Email email,
         Password password,
         Guid roleId,
         Role role,
-        ResetPasswordCode resetPasswordCode,
-        VerificationCode verificationCode
+        ResetPasswordCode resetPasswordCode
 
     ) : base()
     {
@@ -23,8 +22,7 @@ public class AuthUser : DomainModel
         Password = password;
         RoleId = roleId;
         Role = role;
-        this.VerificationCode = verificationCode;
-        this.ResetPasswordCode = resetPasswordCode;
+        ResetPasswordCode = resetPasswordCode;
     }
 
     public AuthUser(
@@ -34,7 +32,6 @@ public class AuthUser : DomainModel
        Role role,
        Guid? id,
        ResetPasswordCode resetPasswordCode,
-       VerificationCode verificationCode,
        bool? isActive,
        bool? isDeleted,
        DateTime? createdAt,
@@ -46,8 +43,7 @@ public class AuthUser : DomainModel
         Password = password;
         RoleId = roleId;
         Role = role;
-        this.VerificationCode = verificationCode;
-        this.ResetPasswordCode = resetPasswordCode;
+        ResetPasswordCode = resetPasswordCode;
     }
 
 }

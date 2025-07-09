@@ -1,11 +1,12 @@
 namespace med_consult_api.src.domain;
 
-public class  Address
+public class Address
 {
     public string Street { get; private set; }
     public string City { get; private set; }
     public string State { get; private set; }
 
+    private Address() { }
     public Address(string street, string city, string state)
     {
         if (string.IsNullOrWhiteSpace(street))
@@ -14,7 +15,7 @@ public class  Address
             throw new ArgumentException("Cidade não pode ser vazia.");
         if (string.IsNullOrWhiteSpace(state))
             throw new ArgumentException("Estado não pode ser vazio.");
-        
+
         Street = street;
         City = city;
         State = state;

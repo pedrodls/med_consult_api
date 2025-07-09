@@ -8,7 +8,7 @@ public class RoleFactory : IFactory<Role, CreateRoleDTO, UpdateRoleDTO>
     {
         return new Role
          (
-             dto.Name.ToUpper(),
+             dto.Name,
              dto.Description
          );
     }

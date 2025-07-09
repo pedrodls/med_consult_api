@@ -4,6 +4,8 @@ public class Birthdate
 {
     public DateTime Date { get; private set; }
 
+    private Birthdate() { }
+
     public Birthdate(DateTime date)
     {
         if (date > DateTime.Now)
