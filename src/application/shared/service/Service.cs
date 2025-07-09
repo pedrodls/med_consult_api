@@ -29,9 +29,9 @@ public class Service<T, C, R, U> : IService<T, C, R, U>
        
     }
 
-    public Task<PageResult<R>> FindAll(string? parameters, PageParams? paginateParams)
+    public Task<QueryResult<R>> FindAll(Query? queryParams)
     {
-        return new FindAllUseCase<T, R>(repository, mapper).ExecuteAsync(parameters, paginateParams);
+        return new FindAllUseCase<T, R>(repository, mapper).ExecuteAsync(queryParams);
     }
 
     public async Task<Response> Delete(Guid id)

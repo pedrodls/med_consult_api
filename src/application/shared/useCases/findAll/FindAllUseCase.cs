@@ -13,13 +13,13 @@ public class FindAllUseCase<T, R> : IFindAllUseCase<T, R>
 
     }
 
-    public async Task<PageResult<R>> ExecuteAsync(string? parameters, PageParams? paginateParams = null)
+    public async Task<QueryResult<R>> ExecuteAsync(Query? paginateParams = null)
     {
-        var pageResultT = await repository.FindAllAsync(parameters, paginateParams);
+        var pageResultT = await repository.FindAllAsync(paginateParams);
 
         var mappedItems = pageResultT.Data.Select(mapper.MapToDTO).ToList();
 
-        var result = new PageResult<R>
+        var result = new QueryResult<R>
         {
             Data = mappedItems,
             Total = pageResultT.Total,

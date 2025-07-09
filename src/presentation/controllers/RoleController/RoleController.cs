@@ -1,5 +1,6 @@
 using med_consult_api.src.application;
 using med_consult_api.src.domain;
+using med_consult_api.src.infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace med_consult_api.src.presentation;
@@ -34,13 +35,13 @@ public class RoleController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<PageResult<RoleDTO>>> GetAllRoles(
+    public async Task<ActionResult<QueryResult<RoleDTO>>> GetAllRoles(
     [FromQuery] RoleQuery? query = null)
     {
         try
         {
-            var roles = await roleService.FindAll(
-            query?.Name, query);
+            //Depois eliminar os filtros de acordo ao tipo de usuários
+            var roles = await roleService.FindAll(query);
 
             return Ok(roles);
         }

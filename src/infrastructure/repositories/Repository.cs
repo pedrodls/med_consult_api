@@ -1,6 +1,7 @@
 
 using med_consult_api.src.application;
 using med_consult_api.src.domain;
+using med_consult_api.src.presentation;
 using Microsoft.EntityFrameworkCore;
 
 namespace med_consult_api.src.infrastructure;
@@ -46,39 +47,21 @@ public class Repository<T> : IRepository<T> where T : DomainModel
         });
     }
 
-    public async Task<PageResult<T>> FindAllAsync(string? parameters, PageParams? paginateParams = null)
+    public async Task<QueryResult<T>> FindAllAsync(Query? queryParams = null)
     {
-        var query = dbSet.AsQueryable();
 
-        if (paginateParams != null)
-        {
-            query = query.Where(x => x.IsActive == paginateParams.IsActive);
-            query = query.Where(x => x.IsDeleted == paginateParams.IsDeleted);
+        IQueryable<T>? query = new QueryActionRepository<T>(dbSet.AsQueryable(), queryParams).GetWhereClause();
 
-            if (paginateParams.CreatedAt != default)
-                query = query.Where(x => x.CreatedAt.Date == paginateParams.CreatedAt.Date);
+        query = new QueryPageParamsRepository<T>().GetWhereClause(queryParams, query);
 
-            if (paginateParams.UpdatedAt != default)
-                query = query.Where(x => x.UpdatedAt.Date == paginateParams.UpdatedAt.Date);
-
-            if (paginateParams.DeletedAt.HasValue)
-                query = query.Where(x => x.DeletedAt.HasValue && x.DeletedAt.Value.Date == paginateParams.DeletedAt.Value.Date);
-        }
-
-        // Ordenação dinâmica
-        query = paginateParams?.Order?.ToUpper() == "DESC"
-            ? query.OrderByDescending(x => x.CreatedAt)
-            : query.OrderBy(x => x.CreatedAt); // ou outro campo configurável
-
-        // Paginação
-        int page = paginateParams?.Page ?? 1;
-        int pageSize = paginateParams?.PageSize ?? 10;
+        int page = queryParams?.Page ?? 1;
+        int pageSize = queryParams?.PageSize ?? 10;
 
         query = query.Skip((page - 1) * pageSize).Take(pageSize);
 
         var data = await query.ToListAsync();
 
-        return new PageResult<T>
+        return new QueryResult<T>
         {
             Data = data,
             Total = data.Count,
@@ -86,8 +69,6 @@ public class Repository<T> : IRepository<T> where T : DomainModel
             PageSize = pageSize
         };
     }
-
-    
 
     public async Task<T> FindOneAsync(Guid id)
     {

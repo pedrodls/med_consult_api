@@ -1,5 +1,5 @@
 namespace med_consult_api.src.application;
-public class PageResult<T>
+public class QueryResult<T>
 {
     public IEnumerable<T> Data { get; set; } = [];
     public int Total { get; set; }

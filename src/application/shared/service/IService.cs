@@ -13,7 +13,7 @@ public interface IService<T, C, R, U>
 {
     Task<R> Create(IFactory<T, C, U> factory, C createDTO);
     Task<R> FindOne(Guid id);
-    Task<PageResult<R>> FindAll(string? parameters, PageParams? paginateParams);
+    Task<QueryResult<R>> FindAll(Query? queryParams);
     Task<Response> Update(IFactory<T, C, U> factory, Guid id, U updateDTO);
     Task<Response> Delete(Guid id);
 }
