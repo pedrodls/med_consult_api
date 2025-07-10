@@ -28,7 +28,7 @@ public abstract class DefaultController<TEntity, TCreateDTO, TDTO, TUpdateDTO, T
         }
         catch (Exception ex)
         {
-            return BadRequest(new { error = "Erro ao criar o recurso.", message = ex.InnerException?.Message ?? ex.Message });
+            return BadRequest(new { message = "Erro ao criar o recurso.", error = ex.Message });
         }
     }
 
@@ -41,7 +41,7 @@ public abstract class DefaultController<TEntity, TCreateDTO, TDTO, TUpdateDTO, T
         }
         catch (Exception ex)
         {
-            return NotFound(new { error = "Recurso não encontrado.", message = ex.Message });
+            return NotFound(new { message = "Recurso não encontrado.", error = ex.Message });
         }
     }
 
@@ -54,7 +54,7 @@ public abstract class DefaultController<TEntity, TCreateDTO, TDTO, TUpdateDTO, T
         }
         catch (Exception ex)
         {
-            return BadRequest(new { error = "Erro ao atualizar o recurso.", message = ex.InnerException?.Message ?? ex.Message });
+            return BadRequest(new { message = "Erro ao atualizar o recurso.", error = ex.Message });
         }
     }
 
@@ -67,7 +67,7 @@ public abstract class DefaultController<TEntity, TCreateDTO, TDTO, TUpdateDTO, T
         }
         catch (Exception ex)
         {
-            return BadRequest(new { error = "Erro ao excluir o recurso.", message = ex.Message });
+            return BadRequest(new { message = "Erro ao excluir o recurso.", error = ex.Message });
         }
     }
 }

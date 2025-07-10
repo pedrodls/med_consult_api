@@ -1,4 +1,3 @@
-using med_consult_api.src.application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace med_consult_api.src.presentation;
@@ -19,7 +18,9 @@ public class AuthServiceController : ControllerBase
     {
         try
         {
-            return Ok(await service.LoginAsync(dto));
+            var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+
+            return Ok(await service.LoginAsync(dto, ipAddress!));
         }
         catch (Exception ex)
         {

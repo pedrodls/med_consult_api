@@ -7,7 +7,6 @@ using med_consult_api.src.application;
 using med_consult_api.src.infrastructure;
 using med_consult_api.src.presentation;
 using med_consult_api.src.presentation.services;
-using med_consult_api.src.domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +28,8 @@ builder.Services.AddScoped(typeof(IAuthUserRepository), typeof(AuthUserRepositor
 
 builder.Services.AddScoped(typeof(IService<,,,>), typeof(Service<,,,>));
 builder.Services.AddScoped(typeof(IAuthService), typeof(AuthService));
+
+builder.Services.AddScoped<IBcryptService, BcryptService>();
 
 // JWT - Autenticação
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));

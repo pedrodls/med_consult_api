@@ -1,6 +1,7 @@
 using med_consult_api.src.application;
 using med_consult_api.src.domain;
 using med_consult_api.src.infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace med_consult_api.src.presentation;
@@ -12,7 +13,50 @@ public class AuthUserController : DefaultController<AuthUser, CreateAuthUserDTO,
         : base(service) { }
 
 
+    [HttpPost]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public override async Task<ActionResult<AuthUserDTO>> Create([FromBody] CreateAuthUserDTO dto)
+    {
+        return await Task.Run(() =>
+       {
+           return BadRequest(new { error = "Erro", message = "Rota não encontrada!" });
+       });
+    }
+
+    [HttpPut("{id}")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public override async Task<ActionResult<Response>> Update(Guid id, [FromBody] UpdateAuthUserDTO dto)
+    {
+        return await Task.Run(() =>
+        {
+            return BadRequest(new { error = "Erro", message = "Rota não encontrada!" });
+        });
+    }
+
+    [HttpDelete("{id}")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public override async Task<ActionResult<Response>> Delete(Guid id)
+    {
+        return await Task.Run(() =>
+        {
+            return BadRequest(new { error = "Erro", message = "Rota não encontrada!" });
+        });
+    }
+
+    [HttpGet("{id}")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public override async Task<ActionResult<AuthUserDTO>> GetById(Guid id)
+    {
+        return await Task.Run(() =>
+       {
+           return BadRequest(new { error = "Erro", message = "Rota não encontrada!" });
+       });
+    }
+
+
     [HttpGet]
+    [Authorize] 
+    [Authorize(Roles = "ADMIN")] 
     public async Task<ActionResult<QueryResult<AuthUserDTO>>> GetAll([FromQuery] AuthUserQuery? query = null)
     {
         try

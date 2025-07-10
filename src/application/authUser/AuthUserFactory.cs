@@ -11,7 +11,6 @@ public class AuthUserFactory : IFactory<AuthUser, CreateAuthUserDTO, UpdateAuthU
         Validate(dto.UserProfileId.ToString(), "ID do Perfil");
         Validate(dto.RoleId.ToString(), "Tipo de Conta");
 
-
         var password = new Password(dto.Password);
 
         return new AuthUser(
