@@ -60,17 +60,6 @@ public class DatabaseContext : DbContext
                telephone.Property(a => a.Value).HasColumnName("Telephone");
            });
 
-        modelBuilder.Entity<AuthUser>().OwnsOne(
-            u => u.Email, email =>
-            {
-                email.Property(e => e.Value)
-                        .HasColumnName("Email")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                email.HasIndex(e => e.Value).IsUnique();
-            });
-
 
         modelBuilder.Entity<AuthUser>().OwnsOne(
             u => u.Password, password =>

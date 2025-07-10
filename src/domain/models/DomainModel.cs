@@ -7,7 +7,7 @@ public abstract class DomainModel
     public DateTime UpdatedAt { get; private set; }
     public DateTime? DeletedAt { get; private set; }
     public bool IsDeleted { get; private set; }
-    public bool IsActive { get; set; }
+    public bool IsActive { get; private set; }
 
     public DomainModel()
     {
@@ -35,15 +35,34 @@ public abstract class DomainModel
         IsActive = isActive ?? true;
     }
 
+    private void VerifyIsDeleted()
+    {
+        if (IsDeleted)
+            throw new Exception("Recurso inexistente!");
+    }
+
     public void MarkAsDeleted()
     {
+        VerifyIsDeleted();
+
         IsDeleted = true;
+        IsActive = false;
         DeletedAt = DateTime.UtcNow;
         Touch();
     }
 
-    public void Activate() { IsActive = true; Touch(); }
-    public void Deactivate() { IsActive = false; Touch(); }
+    public void Activate()
+    {
+        VerifyIsDeleted();
+
+        IsActive = true; Touch();
+    }
+    public void Deactivate()
+    {
+        VerifyIsDeleted();
+
+        IsActive = false; Touch();
+    }
 
     public void Touch() => UpdatedAt = DateTime.UtcNow;
 

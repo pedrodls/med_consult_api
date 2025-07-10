@@ -17,10 +17,15 @@ public class RoleFactory : IFactory<Role, CreateRoleDTO, UpdateRoleDTO>
     {
         entity.Name = updateDTO.Name ?? entity.Name;
         entity.Description = updateDTO.Description ?? entity.Description;
-        entity.IsActive = updateDTO.IsActive ?? entity.IsActive;
+        bool state = updateDTO.IsActive ?? entity.IsActive;
+
+        if (state)
+            entity.Activate();
+        else
+            entity.Deactivate();
 
         entity.Touch();
-        
+
         return entity;
     }
 }

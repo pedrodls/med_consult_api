@@ -5,15 +5,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace med_consult_api.src.presentation;
 
-[Route("api/roles")]
-public class RoleController : DefaultController<Role, CreateRoleDTO, RoleDTO, UpdateRoleDTO, RoleFactory>
+[Route("api/users-profiles")]
+[ApiController]
+public class UserProfileController : DefaultController<UserProfile,
+    CreateUserProfileDTO,
+    UserProfileDTO,
+    UpdateUserProfileDTO,
+    UserProfileFactory>
 {
-    public RoleController(IService<Role, CreateRoleDTO, RoleDTO, UpdateRoleDTO> service)
+    public UserProfileController(
+        IService<UserProfile, CreateUserProfileDTO, UserProfileDTO, UpdateUserProfileDTO> service)
         : base(service) { }
 
-
     [HttpGet]
-    public async Task<ActionResult<QueryResult<RoleDTO>>> GetAll([FromQuery] RoleQuery? query = null)
+    public async Task<ActionResult<QueryResult<UserProfileDTO>>> GetAll([FromQuery] UserProfileQuery? query = null)
     {
         try
         {

@@ -3,15 +3,15 @@ namespace med_consult_api.src.domain;
 
 public class UserProfile : DomainModel
 {
-    public string Avatar { get; private set; }
-    public FullName FullName { get; private set; }
-    public Birthdate Birthdate { get; private set; }
-    public Gender Gender { get; private set; }
-    public Telephone Telephone { get; private set; }
-    public Email Email { get; private set; }
-    public Address Address { get; private set; }
-    public AuthUser? AuthUser { get; private set; }
-    public Guid? AuthUserId { get; private set; }
+    public string Avatar { get; set; }
+    public FullName FullName { get; set; }
+    public Birthdate Birthdate { get; set; }
+    public Gender Gender { get; set; }
+    public Telephone Telephone { get; set; }
+    public Email Email { get; set; }
+    public Address Address { get; set; }
+    public AuthUser? AuthUser { get; set; }
+    public Guid? AuthUserId { get; set; }
 
     private UserProfile() { }
     public UserProfile(

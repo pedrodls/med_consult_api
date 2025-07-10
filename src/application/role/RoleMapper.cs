@@ -22,9 +22,9 @@ public class RoleMapper : IMapper<Role, RoleDTO>
     {
         return new RoleDTO
         {
-            Id = entity.Id,
             Name = entity.Name,
             Description = entity.Description,
+            Id = entity.Id,
             IsActive = entity.IsActive,
             IsDeleted = entity.IsDeleted,
             CreatedAt = entity.CreatedAt,

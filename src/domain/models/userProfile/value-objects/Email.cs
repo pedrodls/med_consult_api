@@ -12,7 +12,7 @@ public class Email
     
     public Email(string value)
     {
-        if (!Regex.IsMatch(value, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+        if (!Regex.IsMatch(value, Pattern.EMAIL_PATTERN))
             throw new ArgumentException("Formato de email inválido.");
 
         Value = value.ToLowerInvariant(); // normaliza o email para minúsculas

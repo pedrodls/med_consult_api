@@ -2,15 +2,14 @@ namespace med_consult_api.src.domain;
 
 public class AuthUser : DomainModel
 {
-    public Email Email { get; private set; }
+    public string UserName { get; private set; }
     public Password Password { get; private set; }
     public Guid RoleId { get; private set; }
     public Role Role { get; private set; }
     public ResetPasswordCode ResetPasswordCode { get; private set; }
-
     private AuthUser() { }
     public AuthUser(
-        Email email,
+        string userName,
         Password password,
         Guid roleId,
         Role role,
@@ -18,7 +17,7 @@ public class AuthUser : DomainModel
 
     ) : base()
     {
-        Email = email;
+        UserName = userName;
         Password = password;
         RoleId = roleId;
         Role = role;
@@ -26,7 +25,7 @@ public class AuthUser : DomainModel
     }
 
     public AuthUser(
-       Email email,
+       string userName,
        Password password,
        Guid roleId,
        Role role,
@@ -39,7 +38,7 @@ public class AuthUser : DomainModel
        DateTime? deletedAt
    ) : base(id, isDeleted, isActive, createdAt, updatedAt, deletedAt)
     {
-        Email = email;
+        UserName = userName;
         Password = password;
         RoleId = roleId;
         Role = role;
