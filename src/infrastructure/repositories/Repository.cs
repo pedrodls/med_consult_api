@@ -6,8 +6,8 @@ namespace med_consult_api.src.infrastructure;
 
 public class Repository<T> : IRepository<T> where T : DomainModel
 {
-    private readonly DatabaseContext context;
-    private readonly DbSet<T> dbSet;
+    protected readonly DatabaseContext context;
+    protected readonly DbSet<T> dbSet;
 
     public Repository(DatabaseContext context)
     {
