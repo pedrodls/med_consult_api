@@ -8,12 +8,6 @@ public class Role : DomainModel
     public Role(string name, string description)
         : base()
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Nome não pode ser vazio ou nulo.");
-
-        if (string.IsNullOrWhiteSpace(description))
-            throw new ArgumentException("Descrição não pode ser vazia ou nulo.");
-
         Name = name.ToUpper();
         Description = description;
     }

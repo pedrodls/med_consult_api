@@ -6,17 +6,23 @@ public class RoleFactory : IFactory<Role, CreateRoleDTO, UpdateRoleDTO>
 {
     public Role Create(CreateRoleDTO dto)
     {
-        return new Role
-         (
-             dto.Name,
-             dto.Description
-         );
+        Validate(dto.Name, "Nome");
+        Validate(dto.Description, "Descrição");
+
+        return new Role(dto.Name.Trim(), dto.Description.Trim());
     }
 
     public Role Update(Role entity, UpdateRoleDTO updateDTO)
     {
-        entity.Name = updateDTO.Name ?? entity.Name;
-        entity.Description = updateDTO.Description ?? entity.Description;
+        if (updateDTO.Name is not null)
+            Validate(updateDTO.Name, "Nome");
+
+        if (updateDTO.Description is not null)
+            Validate(updateDTO.Description, "Descrição");
+
+        entity.Name = updateDTO.Name?.Trim() ?? entity.Name;
+        entity.Description = updateDTO.Description?.Trim() ?? entity.Description;
+
         bool state = updateDTO.IsActive ?? entity.IsActive;
 
         if (state)
@@ -27,5 +33,11 @@ public class RoleFactory : IFactory<Role, CreateRoleDTO, UpdateRoleDTO>
         entity.Touch();
 
         return entity;
+    }
+
+    private void Validate(string? value, string fieldName)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            throw new ArgumentException($"{fieldName} não pode estar vazio.");
     }
 }
