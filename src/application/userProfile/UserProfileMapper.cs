@@ -21,8 +21,6 @@ public class UserProfileMapper : IMapper<UserProfile, UserProfileDTO>
             telephone: telephone,
             email: email,
             address: address,
-            authUser: null,
-            authUserId: dto.AuthUserId,
             id: dto.Id,
             isActive: dto.IsActive,
             isDeleted: dto.IsDeleted,
@@ -53,7 +51,6 @@ public class UserProfileMapper : IMapper<UserProfile, UserProfileDTO>
             Street = entity.Address.Street,
             City = entity.Address.City,
             State = entity.Address.State,
-            AuthUserId = entity.AuthUserId
         };
     }
 }

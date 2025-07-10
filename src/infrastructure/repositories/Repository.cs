@@ -1,7 +1,5 @@
-
 using med_consult_api.src.application;
 using med_consult_api.src.domain;
-using med_consult_api.src.presentation;
 using Microsoft.EntityFrameworkCore;
 
 namespace med_consult_api.src.infrastructure;
@@ -19,14 +17,16 @@ public class Repository<T> : IRepository<T> where T : DomainModel
 
     public async Task<T> AddAsync(T entity)
     {
-        return await Task.Run(() =>
+        try
         {
             dbSet.Add(entity);
-
-            context.SaveChanges();
-
+            await context.SaveChangesAsync();
             return entity;
-        });
+        }
+        catch (DbUpdateException dbEx)
+        {
+            throw new Exception(DbUpdateExceptionHelper.GetUniqueConstraintMessage(dbEx), dbEx);
+        }
     }
 
     public async Task<Response> DeleteAsync(Guid id)
@@ -39,19 +39,15 @@ public class Repository<T> : IRepository<T> where T : DomainModel
                 return Response.Create(id, $"Entidade com ID = {id} não encontrada.");
 
             entity.MarkAsDeleted();
-
             context.SaveChanges();
 
             return Response.Create(id, $"Entidade com ID '{id}' foi eliminada.");
-
         });
     }
 
     public async Task<QueryResult<T>> FindAllAsync(Query? queryParams = null)
     {
-
         IQueryable<T>? query = new QueryActionRepository<T>(dbSet.AsQueryable(), queryParams).GetWhereClause();
-
         query = new QueryPageParamsRepository<T>().GetWhereClause(queryParams, query);
 
         int page = queryParams?.Page ?? 1;
@@ -77,12 +73,18 @@ public class Repository<T> : IRepository<T> where T : DomainModel
 
     public async Task<Response> UpdateAsync(Guid id, T entity)
     {
-        var existingEntity = await FindOneAsync(id);
+        try
+        {
+            var existingEntity = await FindOneAsync(id);
+            context.Entry(existingEntity).CurrentValues.SetValues(entity);
+            await context.SaveChangesAsync();
 
-        context.Entry(existingEntity).CurrentValues.SetValues(entity);
-
-        await context.SaveChangesAsync();
-
-        return Response.Create(id, $"Entidade com ID '{id}' foi atualizada.");
+            return Response.Create(id, $"Entidade com ID '{id}' foi atualizada.");
+        }
+        catch (DbUpdateException dbEx)
+        {
+            throw new Exception(DbUpdateExceptionHelper.GetUniqueConstraintMessage(dbEx), dbEx);
+        }
     }
+
 }

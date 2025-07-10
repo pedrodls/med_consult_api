@@ -26,7 +26,7 @@ public class UserProfileFactory : IFactory<UserProfile, CreateUserProfileDTO, Up
         var email = new Email(dto.Email);
         var address = new Address(dto.Street, dto.City, dto.State);
 
-        return new UserProfile(dto.Avatar, fullName, birthdate, gender, telephone, email, address, null, null);
+        return new UserProfile(dto.Avatar, fullName, birthdate, gender, telephone, email, address);
     }
 
     public UserProfile Update(UserProfile existingProfile, UpdateUserProfileDTO dto)
@@ -59,6 +59,7 @@ public class UserProfileFactory : IFactory<UserProfile, CreateUserProfileDTO, Up
         var street = dto.Street ?? existingProfile.Address.Street;
         var city = dto.City ?? existingProfile.Address.City;
         var state = dto.State ?? existingProfile.Address.State;
+        
         existingProfile.Address = new Address(street, city, state);
 
         if (dto.IsActive.HasValue)

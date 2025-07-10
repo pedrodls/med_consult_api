@@ -12,7 +12,7 @@ public class Password
     public Password(string value)
     {
         if (!Regex.IsMatch(value, Pattern.PASSWORD_PATTERN))
-            throw new ArgumentException("Formato de email inválido.");
+            throw new ArgumentException("A senha deve conter no mínimo 8 caracteres, incluindo pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial (como @, $, !, %, , ?, &, ., _, -).");
 
         Value = value;
     }

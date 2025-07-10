@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using med_consult_api.src.infrastructure;
 
@@ -11,9 +12,11 @@ using med_consult_api.src.infrastructure;
 namespace med_consult_api.src.infrastructure.migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250710114943_Fixed_AuthUser_Model")]
+    partial class Fixed_AuthUser_Model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,7 +51,7 @@ namespace med_consult_api.src.infrastructure.migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserProfileId")
                         .HasColumnType("uniqueidentifier");
@@ -56,10 +59,6 @@ namespace med_consult_api.src.infrastructure.migrations
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
-
-                    b.HasIndex("UserName")
-                        .IsUnique()
-                        .HasDatabaseName("IX_AuthUser_UserName");
 
                     b.HasIndex("UserProfileId")
                         .IsUnique();
@@ -99,8 +98,7 @@ namespace med_consult_api.src.infrastructure.migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
-                        .IsUnique()
-                        .HasDatabaseName("IX_Role_Name");
+                        .IsUnique();
 
                     b.ToTable("Roles");
                 });
@@ -251,14 +249,10 @@ namespace med_consult_api.src.infrastructure.migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(450)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Email");
 
                             b1.HasKey("UserProfileId");
-
-                            b1.HasIndex("Value")
-                                .IsUnique()
-                                .HasDatabaseName("IX_UserProfile_Email");
 
                             b1.ToTable("UserProfiles");
 
@@ -313,14 +307,10 @@ namespace med_consult_api.src.infrastructure.migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(450)")
+                                .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Telephone");
 
                             b1.HasKey("UserProfileId");
-
-                            b1.HasIndex("Value")
-                                .IsUnique()
-                                .HasDatabaseName("IX_UserProfile_Telephone");
 
                             b1.ToTable("UserProfiles");
 

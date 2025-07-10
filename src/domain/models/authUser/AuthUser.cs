@@ -2,35 +2,37 @@ namespace med_consult_api.src.domain;
 
 public class AuthUser : DomainModel
 {
-    public string UserName { get; private set; }
-    public Password Password { get; private set; }
-    public Guid RoleId { get; private set; }
+    public string UserName { get; set; }
+    public Password Password { get; set; }
+    public Guid RoleId { get; set; }
+    public Guid UserProfileId { get; private set; }
+    public UserProfile UserProfile { get; private set; }
     public Role Role { get; private set; }
-    public ResetPasswordCode ResetPasswordCode { get; private set; }
+    public ResetPasswordCode? ResetPasswordCode { get; }
     private AuthUser() { }
     public AuthUser(
         string userName,
         Password password,
         Guid roleId,
-        Role role,
-        ResetPasswordCode resetPasswordCode
+        Guid userProfileId,
+        ResetPasswordCode? resetPasswordCode
 
     ) : base()
     {
         UserName = userName;
         Password = password;
         RoleId = roleId;
-        Role = role;
         ResetPasswordCode = resetPasswordCode;
+        UserProfileId = userProfileId;
     }
 
     public AuthUser(
        string userName,
        Password password,
        Guid roleId,
-       Role role,
        Guid? id,
-       ResetPasswordCode resetPasswordCode,
+       Guid userProfileId,
+       ResetPasswordCode? resetPasswordCode,
        bool? isActive,
        bool? isDeleted,
        DateTime? createdAt,
@@ -41,7 +43,7 @@ public class AuthUser : DomainModel
         UserName = userName;
         Password = password;
         RoleId = roleId;
-        Role = role;
+        UserProfileId = userProfileId;
         ResetPasswordCode = resetPasswordCode;
     }
 

@@ -13,9 +13,30 @@ public class DatabaseContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        //Campos unicos
         modelBuilder.Entity<Role>()
             .HasIndex(r => r.Name)
-            .IsUnique();
+            .IsUnique().HasDatabaseName("IX_Role_Name");
+
+        modelBuilder.Entity<UserProfile>().OwnsOne(
+                u => u.Email, email =>
+                {
+                    email.Property(a => a.Value).HasColumnName("Email");
+                    email.HasIndex(a => a.Value).IsUnique().HasDatabaseName("IX_UserProfile_Email");
+                }
+            );
+
+        modelBuilder.Entity<UserProfile>().OwnsOne(
+              u => u.Telephone, telephone =>
+              {
+                  telephone.Property(a => a.Value).HasColumnName("Telephone");
+                  telephone.HasIndex(a => a.Value).IsUnique().HasDatabaseName("IX_UserProfile_Telephone"); ;
+
+              });
+
+        modelBuilder.Entity<AuthUser>()
+                       .HasIndex(r => r.UserName)
+                       .IsUnique().HasDatabaseName("IX_AuthUser_UserName");
 
         modelBuilder.Entity<UserProfile>().OwnsOne(
             u => u.Address, address =>
@@ -34,13 +55,6 @@ public class DatabaseContext : DbContext
         );
 
         modelBuilder.Entity<UserProfile>().OwnsOne(
-            u => u.Email, email =>
-            {
-                email.Property(a => a.Value).HasColumnName("Email");
-            }
-        );
-
-        modelBuilder.Entity<UserProfile>().OwnsOne(
             u => u.FullName, fullName =>
             {
                 fullName.Property(a => a.FirstName).HasColumnName("FirstName");
@@ -54,12 +68,10 @@ public class DatabaseContext : DbContext
                 gender.Property(a => a.value).HasColumnName("Gender");
             });
 
-        modelBuilder.Entity<UserProfile>().OwnsOne(
-           u => u.Telephone, telephone =>
-           {
-               telephone.Property(a => a.Value).HasColumnName("Telephone");
-           });
-
+        modelBuilder.Entity<AuthUser>()
+            .HasOne(a => a.UserProfile)
+            .WithOne(u => u.AuthUser)
+            .HasForeignKey<AuthUser>(a => a.UserProfileId);
 
         modelBuilder.Entity<AuthUser>().OwnsOne(
             u => u.Password, password =>

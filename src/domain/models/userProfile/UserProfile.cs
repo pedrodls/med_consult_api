@@ -10,9 +10,9 @@ public class UserProfile : DomainModel
     public Telephone Telephone { get; set; }
     public Email Email { get; set; }
     public Address Address { get; set; }
-    public AuthUser? AuthUser { get; set; }
-    public Guid? AuthUserId { get; set; }
-
+    public Guid AuthUserId { get; set; }
+    public AuthUser AuthUser { get; set; }
+    
     private UserProfile() { }
     public UserProfile(
         string avatar,
@@ -21,9 +21,7 @@ public class UserProfile : DomainModel
         Gender gender,
         Telephone telephone,
         Email email,
-        Address address,
-        AuthUser? authUser,
-        Guid? authUserId) : base()
+        Address address) : base()
     {
         Avatar = avatar;
         FullName = fullName;
@@ -32,8 +30,6 @@ public class UserProfile : DomainModel
         Telephone = telephone;
         Email = email;
         Address = address;
-        AuthUser = authUser;
-        AuthUserId = authUserId;
     }
 
     public UserProfile(
@@ -44,8 +40,6 @@ public class UserProfile : DomainModel
             Telephone telephone,
             Email email,
             Address address,
-            AuthUser? authUser,
-            Guid? authUserId,
             Guid? id,
             bool? isActive,
             bool? isDeleted,
@@ -61,8 +55,6 @@ public class UserProfile : DomainModel
         Telephone = telephone;
         Email = email;
         Address = address;
-        AuthUser = authUser;
-        AuthUserId = authUserId;
     }
 
 }
