@@ -10,8 +10,6 @@ public class UserProfile : DomainModel
     public Telephone Telephone { get; set; }
     public Email Email { get; set; }
     public Address Address { get; set; }
-    public Guid AuthUserId { get; set; }
-    public AuthUser AuthUser { get; set; }
     
     private UserProfile() { }
     public UserProfile(

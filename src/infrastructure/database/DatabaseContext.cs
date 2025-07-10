@@ -68,11 +68,6 @@ public class DatabaseContext : DbContext
                 gender.Property(a => a.value).HasColumnName("Gender");
             });
 
-        modelBuilder.Entity<AuthUser>()
-            .HasOne(a => a.UserProfile)
-            .WithOne(u => u.AuthUser)
-            .HasForeignKey<AuthUser>(a => a.UserProfileId);
-
         modelBuilder.Entity<AuthUser>().OwnsOne(
             u => u.Password, password =>
             {

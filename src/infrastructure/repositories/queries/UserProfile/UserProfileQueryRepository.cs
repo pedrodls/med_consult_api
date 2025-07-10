@@ -58,11 +58,7 @@ public class UserProfileQueryRepository : IQueryRepository<UserProfile>
             query = query.Where(p => p.Address.State.Contains(userProfileQuery.State));
         }
 
-        if (userProfileQuery.AuthUserId.HasValue)
-        {
-            query = query.Where(p => p.AuthUserId == userProfileQuery.AuthUserId);
-        }
-
+       
         return query;
     }
 }

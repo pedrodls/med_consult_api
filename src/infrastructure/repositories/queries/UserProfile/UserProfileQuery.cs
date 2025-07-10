@@ -19,6 +19,4 @@ public class UserProfileQuery : Query
     public string? City { get; set; }
     public string? State { get; set; }
 
-    public Guid? AuthUserId { get; set; }
-
 }

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 namespace med_consult_api.src.infrastructure;
 public static class DbUpdateExceptionHelper
 {
-
     public static string GetUniqueConstraintMessage(DbUpdateException dbEx)
     {
         var inner = dbEx.InnerException?.Message?.ToLowerInvariant();
@@ -22,6 +21,6 @@ public static class DbUpdateExceptionHelper
         if (inner.Contains("ix_role_name"))
             return "Já existe uma role com este nome.";
 
-        return "Violação de restrição de unicidade. Um ou mais campos devem ser únicos.";
+        return "Erro de mapeamento, verifique as relações ou os campos obrigatórios.";
     }
 }

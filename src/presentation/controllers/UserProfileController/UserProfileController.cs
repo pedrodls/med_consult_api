@@ -33,4 +33,13 @@ public class UserProfileController : DefaultController<UserProfile,
             });
         }
     }
+
+    [HttpDelete("{id}")]
+    public override async Task<ActionResult<Response>> Delete(Guid id)
+    {
+        return await Task.Run(() =>
+        {
+            return BadRequest(new { error = "Erro ao excluir o recurso.", message = "Só pode desactivar ou eliminar o Usuário que pertence estes dados, mas não pode eliminar os seus dados" });
+        });
+    }
 }
