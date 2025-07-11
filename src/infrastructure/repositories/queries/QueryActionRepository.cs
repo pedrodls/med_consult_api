@@ -30,6 +30,8 @@ public class QueryActionRepository<T>
         if (typeof(T) == typeof(Exam) && queryModel is IQueryable<Exam> examQueryModel)
             queryResult = new ExamQueryRepository().GetWhereClause(queryParams, examQueryModel).Cast<T>();
 
+        if (typeof(T) == typeof(Professional) && queryModel is IQueryable<Professional> professionalQueryModel)
+            queryResult = new ProfessionalQueryRepository().GetWhereClause(queryParams, professionalQueryModel).Cast<T>();
 
         if (typeof(T) == typeof(Consult) && queryModel is IQueryable<Consult> consultQueryModel)
             queryResult = new ConsultQueryRepository().GetWhereClause(queryParams, consultQueryModel).Cast<T>();

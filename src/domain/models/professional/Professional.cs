@@ -5,16 +5,18 @@ public class Professional : DomainModel
     public Guid UserProfileId { get; private set; }
     public UserProfile? UserProfile { get; private set; }
     public Speciality? Speciality { get; private set; }
-    public Guid? SpecialityId { get; private set; }
+    public Guid SpecialityId { get; private set; }
 
-    public Professional(Guid UserProfileId)
+    public Professional(Guid UserProfileId, Guid SpecialityId)
         : base()
     {
         this.UserProfileId = UserProfileId;
+        this.SpecialityId = SpecialityId;
     }
 
     public Professional(
            Guid UserProfileId,
+           Guid SpecialityId,
            Guid? id,
            bool? isActive,
            bool? isDeleted,
@@ -24,6 +26,7 @@ public class Professional : DomainModel
        ) : base(id, isDeleted, isActive, createdAt, updatedAt, deletedAt)
     {
         this.UserProfileId = UserProfileId;
+        this.SpecialityId = SpecialityId;
     }
 
 }

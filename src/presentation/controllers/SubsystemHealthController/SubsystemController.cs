@@ -14,16 +14,16 @@ public class SubsystemHealthController : DefaultController<SubsystemHealth, Crea
 
 
     [HttpPost]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public override async Task<ActionResult<SubsystemHealthDTO>> Create([FromBody] CreateSubsystemHealthDTO dto)
     {
         return await base.Create(dto);
     }
 
     [HttpPut("{id}")]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public override async Task<ActionResult<Response>> Update(Guid id, [FromBody] UpdateSubsystemHealthDTO dto)
     {
         return await Task.Run(() =>
@@ -33,8 +33,8 @@ public class SubsystemHealthController : DefaultController<SubsystemHealth, Crea
     }
 
     [HttpDelete("{id}")]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public override async Task<ActionResult<Response>> Delete(Guid id)
     {
         return await Task.Run(() =>
@@ -44,8 +44,8 @@ public class SubsystemHealthController : DefaultController<SubsystemHealth, Crea
     }
 
     [HttpGet]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public async Task<ActionResult<QueryResult<SubsystemHealthDTO>>> GetAll([FromQuery] SubsystemHealthQuery? query = null)
     {
         try

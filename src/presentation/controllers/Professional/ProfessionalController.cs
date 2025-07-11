@@ -6,25 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace med_consult_api.src.presentation;
 
-[Route("api/consults")]
-public class ConsultController : DefaultController<Consult, CreateConsultDTO, ConsultDTO, UpdateConsultDTO, ConsultFactory>
+[Route("api/professionals")]
+public class ProfessionalController : DefaultController<Professional, CreateProfessionalDTO, ProfessionalDTO, UpdateProfessionalDTO, ProfessionalFactory>
 {
-    public ConsultController(IService<Consult, CreateConsultDTO, ConsultDTO, UpdateConsultDTO> service)
+    public ProfessionalController(IService<Professional, CreateProfessionalDTO, ProfessionalDTO, UpdateProfessionalDTO> service)
         : base(service) { }
 
 
     [HttpPost]
-/*     [Authorize]
+    /* [Authorize]
     [Authorize(Roles = "ADMIN")] */
-    public override async Task<ActionResult<ConsultDTO>> Create([FromBody] CreateConsultDTO dto)
+    public override async Task<ActionResult<ProfessionalDTO>> Create([FromBody] CreateProfessionalDTO dto)
     {
         return await base.Create(dto);
     }
 
     [HttpPut("{id}")]
-/*     [Authorize]
+   /*  [Authorize]
     [Authorize(Roles = "ADMIN")] */
-    public override async Task<ActionResult<Response>> Update(Guid id, [FromBody] UpdateConsultDTO dto)
+    public override async Task<ActionResult<Response>> Update(Guid id, [FromBody] UpdateProfessionalDTO dto)
     {
         return await Task.Run(() =>
         {
@@ -33,7 +33,7 @@ public class ConsultController : DefaultController<Consult, CreateConsultDTO, Co
     }
 
     [HttpDelete("{id}")]
-/*     [Authorize]
+   /*  [Authorize]
     [Authorize(Roles = "ADMIN")] */
     public override async Task<ActionResult<Response>> Delete(Guid id)
     {
@@ -44,9 +44,9 @@ public class ConsultController : DefaultController<Consult, CreateConsultDTO, Co
     }
 
     [HttpGet]
-/*     [Authorize]
+  /*   [Authorize]
     [Authorize(Roles = "ADMIN")] */
-    public async Task<ActionResult<QueryResult<ConsultDTO>>> GetAll([FromQuery] ConsultQuery? query = null)
+    public async Task<ActionResult<QueryResult<ProfessionalDTO>>> GetAll([FromQuery] ProfessionalQuery? query = null)
     {
         try
         {

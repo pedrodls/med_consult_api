@@ -14,16 +14,16 @@ public class ExamCategoryController : DefaultController<ExamCategory, CreateExam
 
 
     [HttpPost]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public override async Task<ActionResult<ExamCategoryDTO>> Create([FromBody] CreateExamCategoryDTO dto)
     {
         return await base.Create(dto);
     }
 
     [HttpPut("{id}")]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public override async Task<ActionResult<Response>> Update(Guid id, [FromBody] UpdateExamCategoryDTO dto)
     {
         return await Task.Run(() =>
@@ -33,8 +33,8 @@ public class ExamCategoryController : DefaultController<ExamCategory, CreateExam
     }
 
     [HttpDelete("{id}")]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public override async Task<ActionResult<Response>> Delete(Guid id)
     {
         return await Task.Run(() =>
@@ -44,8 +44,8 @@ public class ExamCategoryController : DefaultController<ExamCategory, CreateExam
     }
 
     [HttpGet]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public async Task<ActionResult<QueryResult<ExamCategoryDTO>>> GetAll([FromQuery] ExamCategoryQuery? query = null)
     {
         try

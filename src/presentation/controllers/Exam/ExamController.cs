@@ -14,16 +14,16 @@ public class ExamController : DefaultController<Exam, CreateExamDTO, ExamDTO, Up
 
 
     [HttpPost]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public override async Task<ActionResult<ExamDTO>> Create([FromBody] CreateExamDTO dto)
     {
         return await base.Create(dto);
     }
 
     [HttpPut("{id}")]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public override async Task<ActionResult<Response>> Update(Guid id, [FromBody] UpdateExamDTO dto)
     {
         return await Task.Run(() =>
@@ -33,8 +33,8 @@ public class ExamController : DefaultController<Exam, CreateExamDTO, ExamDTO, Up
     }
 
     [HttpDelete("{id}")]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public override async Task<ActionResult<Response>> Delete(Guid id)
     {
         return await Task.Run(() =>
@@ -44,8 +44,8 @@ public class ExamController : DefaultController<Exam, CreateExamDTO, ExamDTO, Up
     }
 
     [HttpGet]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public async Task<ActionResult<QueryResult<ExamDTO>>> GetAll([FromQuery] ExamQuery? query = null)
     {
         try

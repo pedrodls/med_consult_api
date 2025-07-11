@@ -14,16 +14,16 @@ public class SpecialityController : DefaultController<Speciality, CreateSpeciali
 
 
     [HttpPost]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public override async Task<ActionResult<SpecialityDTO>> Create([FromBody] CreateSpecialityDTO dto)
     {
         return await base.Create(dto);
     }
 
     [HttpPut("{id}")]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public override async Task<ActionResult<Response>> Update(Guid id, [FromBody] UpdateSpecialityDTO dto)
     {
         return await Task.Run(() =>
@@ -33,8 +33,8 @@ public class SpecialityController : DefaultController<Speciality, CreateSpeciali
     }
 
     [HttpDelete("{id}")]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public override async Task<ActionResult<Response>> Delete(Guid id)
     {
         return await Task.Run(() =>
@@ -44,8 +44,8 @@ public class SpecialityController : DefaultController<Speciality, CreateSpeciali
     }
 
     [HttpGet]
-    [Authorize]
-    [Authorize(Roles = "ADMIN")]
+/*     [Authorize]
+    [Authorize(Roles = "ADMIN")] */
     public async Task<ActionResult<QueryResult<SpecialityDTO>>> GetAll([FromQuery] SpecialityQuery? query = null)
     {
         try
