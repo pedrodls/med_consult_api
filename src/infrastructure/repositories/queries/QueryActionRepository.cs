@@ -18,6 +18,9 @@ public class QueryActionRepository<T>
     {
         var queryResult = queryModel;
 
+        if (typeof(T) == typeof(SubsystemHealth) && queryModel is IQueryable<SubsystemHealth> subsystemHeallthQueryModel)
+            queryResult = new SubsystemHealthQueryRepository().GetWhereClause(queryParams, subsystemHeallthQueryModel).Cast<T>();
+
         if (typeof(T) == typeof(Role) && queryModel is IQueryable<Role> roleQueryModel)
             queryResult = new RoleQueryRepository().GetWhereClause(queryParams, roleQueryModel).Cast<T>();
 

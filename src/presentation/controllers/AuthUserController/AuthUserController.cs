@@ -13,7 +13,7 @@ public class AuthUserController : DefaultController<AuthUser, CreateAuthUserDTO,
         : base(service) { }
 
 
-    [HttpPost]
+    /* [HttpPost]
     [ApiExplorerSettings(IgnoreApi = true)]
     public override async Task<ActionResult<AuthUserDTO>> Create([FromBody] CreateAuthUserDTO dto)
     {
@@ -51,12 +51,12 @@ public class AuthUserController : DefaultController<AuthUser, CreateAuthUserDTO,
        {
            return BadRequest(new { error = "Erro", message = "Rota não encontrada!" });
        });
-    }
+    } */
 
 
     [HttpGet]
-    [Authorize] 
-    [Authorize(Roles = "ADMIN")] 
+    //[Authorize] 
+    //[Authorize(Roles = "ADMIN")] 
     public async Task<ActionResult<QueryResult<AuthUserDTO>>> GetAll([FromQuery] AuthUserQuery? query = null)
     {
         try
