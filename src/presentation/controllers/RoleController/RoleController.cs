@@ -11,8 +11,6 @@ public class RoleController : DefaultController<Role, CreateRoleDTO, RoleDTO, Up
     public RoleController(IService<Role, CreateRoleDTO, RoleDTO, UpdateRoleDTO> service)
         : base(service) { }
 
-    // Aqui pode adicionar endpoints específicos (ex: GetAll com filtros)
-
     [HttpGet]
     public async Task<ActionResult<QueryResult<RoleDTO>>> GetAll([FromQuery] RoleQuery? query = null)
     {

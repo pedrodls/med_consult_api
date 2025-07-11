@@ -4,11 +4,11 @@ namespace med_consult_api.src.presentation;
 
 [ApiController]
 [Route("api/auth")]
-public class AuthServiceController : ControllerBase
+public class AuthController : ControllerBase
 {
     IAuthService service;
 
-    public AuthServiceController(IAuthService service)
+    public AuthController(IAuthService service)
     {
         this.service = service;
     }
