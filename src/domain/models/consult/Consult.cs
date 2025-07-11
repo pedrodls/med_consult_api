@@ -4,8 +4,8 @@ public class Consult : DomainModel
 {
     public string Name { get; set; }
     public string Description { get; set; }
-    public Speciality? Speciality { get; private set; }
-    public Guid SpecialityId { get; private set; }
+    public Speciality? Speciality { get;  set; }
+    public Guid SpecialityId { get; set; }
 
     public Consult(string name, string description, Guid SpecialityId)
         : base()

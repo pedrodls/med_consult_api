@@ -2,18 +2,17 @@ using med_consult_api.src.domain;
 
 namespace med_consult_api.src.application;
 
-public class ExamFactory : IFactory<Exam, CreateExamDTO, UpdateExamDTO>
+public class ConsultFactory : IFactory<Consult, CreateConsultDTO, UpdateConsultDTO>
 {
-    public Exam Create(CreateExamDTO dto)
+    public Consult Create(CreateConsultDTO dto)
     {
         Validate(dto.Name, "Nome");
         Validate(dto.Description, "Descrição");
-   
 
-        return new Exam(dto.Name.Trim(), dto.Description.Trim(), dto.SpecialityId, dto.ExamCategoryId);
+        return new Consult(dto.Name.Trim(), dto.Description.Trim(), dto.SpecialityId);
     }
 
-    public Exam Update(Exam entity, UpdateExamDTO updateDTO)
+    public Consult Update(Consult entity, UpdateConsultDTO updateDTO)
     {
         if (updateDTO.Name is not null)
             Validate(updateDTO.Name, "Nome");
@@ -24,7 +23,7 @@ public class ExamFactory : IFactory<Exam, CreateExamDTO, UpdateExamDTO>
         entity.Name = updateDTO.Name?.Trim() ?? entity.Name;
         entity.Description = updateDTO.Description?.Trim() ?? entity.Description;
         entity.SpecialityId = updateDTO.SpecialityId ?? entity.SpecialityId;
-        entity.ExamCategoryId = updateDTO.ExamCategoryId ?? entity.ExamCategoryId;
+
 
         bool state = updateDTO.IsActive ?? entity.IsActive;
 
@@ -38,7 +37,7 @@ public class ExamFactory : IFactory<Exam, CreateExamDTO, UpdateExamDTO>
         return entity;
     }
 
-    private void Validate(string value, string fieldName)
+    private void Validate(string? value, string fieldName)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new ArgumentException($"{fieldName} não pode estar vazio.");
