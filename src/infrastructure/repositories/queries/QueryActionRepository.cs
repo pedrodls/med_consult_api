@@ -24,6 +24,9 @@ public class QueryActionRepository<T>
         if (typeof(T) == typeof(Role) && queryModel is IQueryable<Role> roleQueryModel)
             queryResult = new RoleQueryRepository().GetWhereClause(queryParams, roleQueryModel).Cast<T>();
 
+        if (typeof(T) == typeof(ExamCategory) && queryModel is IQueryable<ExamCategory> examCategoryQueryModel)
+            queryResult = new ExamCategoryQueryRepository().GetWhereClause(queryParams, examCategoryQueryModel).Cast<T>();
+
         if (typeof(T) == typeof(Speciality) && queryModel is IQueryable<Speciality> specialityQueryModel)
             queryResult = new SpecialityQueryRepository().GetWhereClause(queryParams, specialityQueryModel).Cast<T>();
 
