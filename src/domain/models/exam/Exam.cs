@@ -4,10 +4,10 @@ public class Exam : DomainModel
 {
     public string Name { get; set; }
     public string Description { get; set; }
-    public Speciality? Speciality { get; private set; }
-    public Guid SpecialityId { get; private set; }
-    public ExamCategory? ExamCategory { get; private set; }
-    public Guid ExamCategoryId { get; private set; }
+    public Speciality? Speciality { get; set; }
+    public Guid SpecialityId { get; set; }
+    public ExamCategory? ExamCategory { get; set; }
+    public Guid ExamCategoryId { get; set; }
 
     public Exam(string name, string description, Guid SpecialityId, Guid ExamCategoryId)
         : base()

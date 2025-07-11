@@ -7,16 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace med_consult_api.src.presentation;
 
 [Route("api/exam-categories")]
-public class ExamCategoryController : DefaultController<SubsystemHealth, CreateSubsystemHealthDTO, SubsystemHealthDTO, UpdateSubsystemHealthDTO, SubsystemHealthFactory>
+public class ExamCategoryController : DefaultController<ExamCategory, CreateExamCategoryDTO, ExamCategoryDTO, UpdateExamCategoryDTO, ExamCategoryFactory>
 {
-    public ExamCategoryController(IService<SubsystemHealth, CreateSubsystemHealthDTO, SubsystemHealthDTO, UpdateSubsystemHealthDTO> service)
+    public ExamCategoryController(IService<ExamCategory, CreateExamCategoryDTO, ExamCategoryDTO, UpdateExamCategoryDTO> service)
         : base(service) { }
 
 
     [HttpPost]
     [Authorize]
     [Authorize(Roles = "ADMIN")]
-    public override async Task<ActionResult<SubsystemHealthDTO>> Create([FromBody] CreateSubsystemHealthDTO dto)
+    public override async Task<ActionResult<ExamCategoryDTO>> Create([FromBody] CreateExamCategoryDTO dto)
     {
         return await base.Create(dto);
     }
@@ -24,7 +24,7 @@ public class ExamCategoryController : DefaultController<SubsystemHealth, CreateS
     [HttpPut("{id}")]
     [Authorize]
     [Authorize(Roles = "ADMIN")]
-    public override async Task<ActionResult<Response>> Update(Guid id, [FromBody] UpdateSubsystemHealthDTO dto)
+    public override async Task<ActionResult<Response>> Update(Guid id, [FromBody] UpdateExamCategoryDTO dto)
     {
         return await Task.Run(() =>
         {
@@ -46,7 +46,7 @@ public class ExamCategoryController : DefaultController<SubsystemHealth, CreateS
     [HttpGet]
     [Authorize]
     [Authorize(Roles = "ADMIN")]
-    public async Task<ActionResult<QueryResult<SubsystemHealthDTO>>> GetAll([FromQuery] SubsystemHealthQuery? query = null)
+    public async Task<ActionResult<QueryResult<ExamCategoryDTO>>> GetAll([FromQuery] ExamCategoryQuery? query = null)
     {
         try
         {

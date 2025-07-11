@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace med_consult_api.src.presentation;
 
-[Route("api/specialities")]
-public class SpecialityController : DefaultController<Speciality, CreateSpecialityDTO, SpecialityDTO, UpdateSpecialityDTO, SpecialityFactory>
+[Route("api/exams")]
+public class ExamController : DefaultController<Exam, CreateExamDTO, ExamDTO, UpdateExamDTO, ExamFactory>
 {
-    public SpecialityController(IService<Speciality, CreateSpecialityDTO, SpecialityDTO, UpdateSpecialityDTO> service)
+    public ExamController(IService<Exam, CreateExamDTO, ExamDTO, UpdateExamDTO> service)
         : base(service) { }
 
 
     [HttpPost]
     [Authorize]
     [Authorize(Roles = "ADMIN")]
-    public override async Task<ActionResult<SpecialityDTO>> Create([FromBody] CreateSpecialityDTO dto)
+    public override async Task<ActionResult<ExamDTO>> Create([FromBody] CreateExamDTO dto)
     {
         return await base.Create(dto);
     }
@@ -24,7 +24,7 @@ public class SpecialityController : DefaultController<Speciality, CreateSpeciali
     [HttpPut("{id}")]
     [Authorize]
     [Authorize(Roles = "ADMIN")]
-    public override async Task<ActionResult<Response>> Update(Guid id, [FromBody] UpdateSpecialityDTO dto)
+    public override async Task<ActionResult<Response>> Update(Guid id, [FromBody] UpdateExamDTO dto)
     {
         return await Task.Run(() =>
         {
@@ -46,7 +46,7 @@ public class SpecialityController : DefaultController<Speciality, CreateSpeciali
     [HttpGet]
     [Authorize]
     [Authorize(Roles = "ADMIN")]
-    public async Task<ActionResult<QueryResult<SpecialityDTO>>> GetAll([FromQuery] SpecialityQuery? query = null)
+    public async Task<ActionResult<QueryResult<ExamDTO>>> GetAll([FromQuery] ExamQuery? query = null)
     {
         try
         {
