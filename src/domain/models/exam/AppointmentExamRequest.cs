@@ -1,16 +1,15 @@
 namespace med_consult_api.src.domain;
 
-public class AppointmentRequest : DomainModel
+public class AppointmentExamRequest : DomainModel
 {
-    public IEnumerable<RequestConsult>? RequestConsults { get; set; }
-    public IEnumerable<RequestExam>? RequestExams { get; set; }
+    public List<ClinicalExamAct> ClinicalExamActActs { get; set; } = new();
     public UserProfile? UserProfile { get; set; }
     public Guid UserProfileId { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public string Observations { get; set; }
 
-    public AppointmentRequest(
+    public AppointmentExamRequest(
         Guid UserProfileId,
         DateTime StartDate,
         DateTime EndDate,
@@ -24,7 +23,7 @@ public class AppointmentRequest : DomainModel
         this.Observations = Observations;
     }
 
-    public AppointmentRequest(
+    public AppointmentExamRequest(
         Guid UserProfileId,
         DateTime StartDate,
         DateTime EndDate,

@@ -42,11 +42,7 @@ public class QueryActionRepository<T>
         if (typeof(T) == typeof(UserProfile) && queryModel is IQueryable<UserProfile> userProfileQueryModel)
             queryResult = new UserProfileQueryRepository().GetWhereClause(queryParams, userProfileQueryModel).Cast<T>();
 
-        if (typeof(T) == typeof(RequestConsult) && queryModel is IQueryable<RequestConsult> requestConsultQueryModel)
-            queryResult = new RequestConsultQueryRepository().GetWhereClause(queryParams, requestConsultQueryModel).Cast<T>();
-
-        if (typeof(T) == typeof(RequestExam) && queryModel is IQueryable<RequestExam> requestExamQueryModel)
-            queryResult = new RequestExamQueryRepository().GetWhereClause(queryParams, requestExamQueryModel).Cast<T>();
+       
 
 
         return queryResult;

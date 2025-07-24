@@ -107,24 +107,11 @@ public class DatabaseContext : DbContext
             .HasForeignKey(p => p.SpecialityId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<AppointmentScheduleRequest>()
-            .HasOne(r => r.AppointmentRequest)
-            .WithMany()
-            .HasForeignKey(r => r.AppointmentRequestId)
-            .OnDelete(DeleteBehavior.Restrict); // ou .NoAction
-
-        modelBuilder.Entity<AppointmentScheduleRequest>()
-            .HasOne(r => r.UserProfile)
-            .WithMany()
-            .HasForeignKey(r => r.UserProfileId)
-            .OnDelete(DeleteBehavior.Restrict); // ou .NoAction
-
+       
     }
 
     public DbSet<Role> Roles { get; set; }
     public DbSet<Exam> Exams { get; set; }
-    public DbSet<RequestExam> RequestExams { get; set; }
-    public DbSet<RequestConsult> RequestConsults { get; set; }
     public DbSet<ExamCategory> ExamCategories { get; set; }
     public DbSet<Consult> Consults { get; set; }
     public DbSet<ClinicalConsultAct> ClinicalConsultActs { get; set; }
@@ -134,8 +121,7 @@ public class DatabaseContext : DbContext
     public DbSet<Professional> Professionals { get; set; }
     public DbSet<AuthUser> AuthUsers { get; set; }
     public DbSet<UserProfile> UserProfiles { get; set; }
-    public DbSet<AppointmentRequest> AppointmentRequests { get; set; }
-    public DbSet<AppointmentScheduleRequest> AppointmentScheduleRequests { get; set; }
+  
 
 
 
