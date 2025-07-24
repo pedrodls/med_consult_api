@@ -42,8 +42,11 @@ public class QueryActionRepository<T>
         if (typeof(T) == typeof(UserProfile) && queryModel is IQueryable<UserProfile> userProfileQueryModel)
             queryResult = new UserProfileQueryRepository().GetWhereClause(queryParams, userProfileQueryModel).Cast<T>();
 
-       
+        if (typeof(T) == typeof(ClinicalConsultAct) && queryModel is IQueryable<ClinicalConsultAct> clinicalConsultQueryModel)
+            queryResult = new ClinicalConsultActQueryRepository().GetWhereClause(queryParams, clinicalConsultQueryModel).Cast<T>();
 
+        if (typeof(T) == typeof(ClinicalExamAct) && queryModel is IQueryable<ClinicalExamAct> clinicalExamQueryModel)
+            queryResult = new ClinicalExamActQueryRepository().GetWhereClause(queryParams, clinicalExamQueryModel).Cast<T>();
 
         return queryResult;
     }

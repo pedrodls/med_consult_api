@@ -8,7 +8,7 @@ public abstract class ClinicalActModel : DomainModel
     public Guid SubsystemHealthId { get; set; }
 
 protected ClinicalActModel() {}
-    public ClinicalActModel(Guid professionalId, Guid subsystemHealthId)
+    public ClinicalActModel(Guid? professionalId, Guid subsystemHealthId)
         : base()
     {
         ProfessionalId = professionalId;
@@ -16,7 +16,7 @@ protected ClinicalActModel() {}
     }
 
     public ClinicalActModel(
-        Guid ProfessionalId, Guid SubsystemHealthId,
+        Guid? ProfessionalId, Guid SubsystemHealthId,
         Guid? id,
         bool? isActive,
         bool? isDeleted,

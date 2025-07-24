@@ -107,7 +107,44 @@ public class DatabaseContext : DbContext
             .HasForeignKey(p => p.SpecialityId)
             .OnDelete(DeleteBehavior.Restrict);
 
-       
+        modelBuilder.Entity<AppointmentConsultRequest>()
+        .HasOne(a => a.UserProfile)
+        .WithMany()
+        .HasForeignKey(a => a.UserProfileId)
+        .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<AppointmentConsultSchedule>()
+            .HasOne(a => a.Administrative)
+                 .WithMany()
+                 .HasForeignKey(a => a.AdministrativeId)
+                 .OnDelete(DeleteBehavior.NoAction);
+
+
+        modelBuilder.Entity<AppointmentConsultDone>()
+            .HasOne(a => a.Administrative)
+                 .WithMany()
+                 .HasForeignKey(a => a.AdministrativeId)
+                 .OnDelete(DeleteBehavior.NoAction);
+
+ modelBuilder.Entity<AppointmentExamRequest>()
+        .HasOne(a => a.UserProfile)
+        .WithMany()
+        .HasForeignKey(a => a.UserProfileId)
+        .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<AppointmentExamSchedule>()
+            .HasOne(a => a.Administrative)
+                 .WithMany()
+                 .HasForeignKey(a => a.AdministrativeId)
+                 .OnDelete(DeleteBehavior.NoAction);
+
+
+        modelBuilder.Entity<AppointmentExamDone>()
+            .HasOne(a => a.Administrative)
+                 .WithMany()
+                 .HasForeignKey(a => a.AdministrativeId)
+                 .OnDelete(DeleteBehavior.NoAction);
+
     }
 
     public DbSet<Role> Roles { get; set; }
@@ -121,8 +158,11 @@ public class DatabaseContext : DbContext
     public DbSet<Professional> Professionals { get; set; }
     public DbSet<AuthUser> AuthUsers { get; set; }
     public DbSet<UserProfile> UserProfiles { get; set; }
-  
-
-
+    public DbSet<AppointmentConsultRequest> AppointmentConsultRequests { get; set; }
+    public DbSet<AppointmentConsultDone> AppointmentConsultDones { get; set; }
+    public DbSet<AppointmentConsultSchedule> AppointmentConsultSchedules { get; set; }
+    public DbSet<AppointmentExamRequest> AppointmentExamRequests { get; set; }
+    public DbSet<AppointmentExamDone> AppointmentExamDones { get; set; }
+    public DbSet<AppointmentExamSchedule> AppointmentExamSchedules { get; set; }
 
 }

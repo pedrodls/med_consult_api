@@ -3,17 +3,17 @@ namespace med_consult_api.src.domain;
 public class ClinicalExamAct : ClinicalActModel
 {
     public Exam? Exam { get; set; }
-    public Guid? ExamId { get; set; }
+    public Guid ExamId { get; set; }
 
     private ClinicalExamAct() { }
-    public ClinicalExamAct(Guid ExamId, Guid ProfessionalId, Guid SubsystemHealthId)
+    public ClinicalExamAct(Guid ExamId, Guid? ProfessionalId, Guid SubsystemHealthId)
         : base(ProfessionalId, SubsystemHealthId)
     {
         this.ExamId = ExamId;
     }
 
     public ClinicalExamAct(
-        Guid examId, Guid professionalId, Guid subsystemHealthId,
+        Guid examId, Guid? professionalId, Guid subsystemHealthId,
         Guid? id,
            bool? isActive,
            bool? isDeleted,
