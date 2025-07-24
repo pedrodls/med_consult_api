@@ -1,13 +1,12 @@
 
 using med_consult_api.src.application;
-using med_consult_api.src.domain;
 
 namespace med_consult_api.src.infrastructure;
 
-public class AppointmentConsultDoneQuery : Query
+public class AppointmentExamDoneQuery : Query
 {
     public Guid? AdministrativeId { get; set; }
-    public Guid? AppointmentConsultScheduleId { get; set; }
+    public Guid? AppointmentExamScheduleId { get; set; }
     public DateTime? Date { get; set; }
 
 }
