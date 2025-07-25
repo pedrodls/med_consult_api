@@ -19,13 +19,22 @@ public class AuthService : IAuthService
         this.bcryptService = bcryptService;
     }
 
+    public async Task<AuthUserDTO> CreateUserAsync(CreateAuthUserDTO dto)
+    {
+        dto.Password = bcryptService.Hash(dto.Password);
+
+        AuthUser authUser = await authUserRepo.AddAsync(new AuthUserFactory().Create(dto));
+
+        return new AuthUserMapper().MapToDTO(authUser);
+    }
+
     public async Task<TokenDTO> LoginAsync(LoginDTO loginDTO, string ip)
     {
         var user = await authUserRepo.FindOneByUserNameAsync(loginDTO.UserName);
 
         if (
-            user == null /* ||
-            !bcryptService.Verify(loginDTO.Password, user.Password.Value) */
+            user == null ||
+            !bcryptService.Verify(loginDTO.Password, user.Password.Value)
         )
             throw new UnauthorizedAccessException("Credenciais inválidas!");
 
@@ -49,8 +58,16 @@ public class AuthService : IAuthService
                 new Claim("userName", user.UserName),
                 new Claim("role", user.Role.Name),
                 new Claim("ip", ip)
-                
             ])
         };
+    }
+
+    public async Task<Response> UpdateUserRoleAsync(UpdateUserRoleDTO updateRoleDTO)
+    {
+        AuthUser authUser = await authUserRepo.FindOneAsync(updateRoleDTO.RoleId) ?? throw new Exception("Usuário não encontrado!");
+        
+        authUser = new AuthUserFactory().Update(authUser, new UpdateAuthUserDTO() { RoleId = updateRoleDTO.RoleId });
+
+        return await authUserRepo.UpdateAsync(authUser.Id, new AuthUserFactory().Update(authUser, new UpdateAuthUserDTO() { RoleId = updateRoleDTO.RoleId }));
     }
 }
